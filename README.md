@@ -118,3 +118,23 @@ only showing top 10 rows
 ```
 .withColumn("SchoolYear", substring(col("SchoolYear"), 1, 4))
 ```
+
+### what is udaf?
+> User-Defined Aggregate Functions (UDAFs) are user-programmable routines that act on multiple rows at once and return a single aggregated value as a result. [here](https://spark.apache.org/docs/3.2.1/sql-ref-functions-udf-aggregate.html) and [here](https://spark.apache.org/docs/latest/api/scala/org/apache/spark/sql/expressions/Aggregator.html)
+```
+abstract classAggregator[-IN, BUF, OUT] extends Serializable
+
+case class Data(i: Int)
+
+val customSummer =  new Aggregator[Data, Int, Int] {
+  def zero: Int = 0
+  def reduce(b: Int, a: Data): Int = b + a.i
+  def merge(b1: Int, b2: Int): Int = b1 + b2
+  def finish(r: Int): Int = r
+  def bufferEncoder: Encoder[Int] = Encoders.scalaInt
+  def outputEncoder: Encoder[Int] = Encoders.scalaInt
+}.toColumn()
+
+val ds: Dataset[Data] = ...
+val aggregated = ds.select(customSummer)
+```
