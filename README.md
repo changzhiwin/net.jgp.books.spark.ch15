@@ -112,6 +112,26 @@ only showing top 10 rows
 
 ```
 
+### Case: PointsPerOrder udaf
+```
+root
+ |-- firstName: string (nullable = true)
+ |-- lastName: string (nullable = true)
+ |-- state: string (nullable = true)
+ |-- quantity: integer (nullable = true)
+ |-- revenue: integer (nullable = true)
+ |-- timestamp: integer (nullable = true)
+ 
++------------+--------+-----+-------------+-----+------------------+
+|firstName   |lastName|state|sum(quantity)|point|demo              |
++------------+--------+-----+-------------+-----+------------------+
+|Ginni       |Rometty |NY   |7            |3    |30.333333333333332|
+|Jean-Georges|Perrin  |CA   |4            |3    |25.0              |
+|Holden      |Karau   |CA   |10           |6    |31.666666666666668|
+|Jean-Georges|Perrin  |NC   |3            |3    |140.0             |
++------------+--------+-----+-------------+-----+------------------+
+```
+
 ## 4, Some diffcult case
 
 ### substring function, index start 1
